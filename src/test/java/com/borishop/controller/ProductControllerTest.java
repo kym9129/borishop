@@ -71,15 +71,15 @@ public class ProductControllerTest {
         ).andExpect(status().isOk());
     }
 
-    @Test
-    @DisplayName("상품 목록 조회 controller 테스트")
-    void read_product_list_test() throws Exception {
-
-//        given(productService.findAll()).will
-
-        mvc.perform(
-                get("/product")
-        ).andExpect(status().isOk())
-                .andExpect(jsonPath("$.data", is(productList)));
-    }
+//    @Test
+//    @DisplayName("상품 목록 조회 controller 테스트")
+//    void read_product_list_test() throws Exception {
+//
+////        given(productService.findAll()).will
+//
+//        mvc.perform(
+//                get("/product")
+//        ).andExpect(status().isOk())
+//                .andExpect(jsonPath("$.data", is(productList)));
+//    }
 }
