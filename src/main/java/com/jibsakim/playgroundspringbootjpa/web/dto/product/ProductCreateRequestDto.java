@@ -1,4 +1,4 @@
-package com.jibsakim.playgroundspringbootjpa.web.dto;
+package com.jibsakim.playgroundspringbootjpa.web.dto.product;
 
 import com.jibsakim.playgroundspringbootjpa.constant.ProductSellStatus;
 import com.jibsakim.playgroundspringbootjpa.domain.product.Product;
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @AllArgsConstructor
 @Builder
-public class ProductAddRequestDto {
+public class ProductCreateRequestDto {
     @NotBlank(message = "상품명은 필수 입력 값입니다.")
     private String productName;
 
