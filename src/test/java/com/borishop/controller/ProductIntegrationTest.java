@@ -110,7 +110,7 @@ public class ProductIntegrationTest {
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
-        Product product = productRepository.findById(updateId).orElseThrow();
+        Product product = productRepository.findById(updateId).orElseThrow(null);
         assertAll(
                 () -> assertThat(product.getProductName()).isEqualTo(givenRequestDto.getProductName()),
                 () -> assertThat(product.getPrice()).isEqualTo(givenRequestDto.getPrice()),
