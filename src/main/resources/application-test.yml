@@ -1,3 +1,4 @@
 spring:
+  profiles: test
   jpa:
     show-sql: true
