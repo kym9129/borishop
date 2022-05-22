@@ -119,6 +119,7 @@ public class ProductIntegrationTest {
                 () -> assertThat(product.getProductSellStatus()).isEqualTo(givenRequestDto.getProductSellStatus())
         );
 
+
     }
 
 }
