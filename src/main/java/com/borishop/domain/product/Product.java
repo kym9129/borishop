@@ -1,6 +1,7 @@
 package com.borishop.domain.product;
 
 import com.borishop.constant.ProductSellStatus;
+import com.borishop.domain.BaseTimeEntity;
 import com.borishop.web.dto.product.ProductUpdateRequestDto;
 import lombok.*;
 
@@ -10,7 +11,8 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @Entity(name = "PRODUCT")
-public class Product {
+@ToString
+public class Product extends BaseTimeEntity {
 
     @Id
     @Column(name="product_id")
@@ -33,9 +35,9 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private ProductSellStatus productSellStatus; // 상품 판매상태
 
-    private LocalDateTime createdAt; // 등록 시간
-
-    private LocalDateTime updatedAt; // 수정 시간
+    // BaseTimeEntity로 처리
+//    private LocalDateTime createdAt; // 등록 시간
+//    private LocalDateTime updatedAt; // 수정 시간
 
     @Builder
     public Product (Long id, String productName, int price, int stockNumber, String productDetail, ProductSellStatus productSellStatus){
@@ -45,7 +47,7 @@ public class Product {
         this.stockNumber = stockNumber;
         this.productDetail = productDetail;
         this.productSellStatus = productSellStatus;
-        this.createdAt = LocalDateTime.now();
+//        this.createdAt = LocalDateTime.now();
     }
 
     /* 도메인에서 처리하는 비즈니스 로직 */
@@ -55,6 +57,6 @@ public class Product {
         this.stockNumber = requestDto.getStockNumber();
         this.productDetail = requestDto.getProductDetail();
         this.productSellStatus = requestDto.getProductSellStatus();
-        this.updatedAt = LocalDateTime.now();
+//        this.updatedAt = LocalDateTime.now();
     }
 }
