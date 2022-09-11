@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +28,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DataJpaTest
-@TestPropertySource(locations = "classpath:application-test.yml")
+@TestPropertySource(properties = {
+        "spring.jpa.hibernate.ddl-auto=create-drop"
+})
+@ActiveProfiles("local")
 @Transactional
 public class ProductRepositoryTest {
     @Autowired
