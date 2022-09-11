@@ -5,4 +5,4 @@ spring:
   datasource:
     url: jdbc:h2:mem:testdb
   profiles:
-    include: oauth
+    include: security # 별도 .yml 사용
