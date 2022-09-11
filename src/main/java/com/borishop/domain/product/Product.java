@@ -10,28 +10,29 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-@Entity(name = "PRODUCT")
+@Entity(name = "product")
 @ToString
 public class Product extends BaseTimeEntity {
 
     @Id
-    @Column(name="product_id")
+    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 50)
+    @Column(name="product_name", nullable = false, length = 50)
     private String productName; // 상품명
 
     @Column(name="price", nullable = false)
     private int price;
 
-    @Column(nullable = false)
+    @Column(name="stock_number", nullable = false)
     private int stockNumber; // 재고수량
 
     @Lob
-    @Column(nullable = false)
+    @Column(name="product_detail", nullable = false)
     private String productDetail; // 상품 상세 설명
 
+    @Column(name="product_sell_status")
     @Enumerated(EnumType.STRING)
     private ProductSellStatus productSellStatus; // 상품 판매상태
 
