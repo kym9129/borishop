@@ -1,3 +1,6 @@
 spring:
+  output:
+    ansi:
+      enabled : always # 콘솔로그 컬러로 출력
   profiles:
     include: security

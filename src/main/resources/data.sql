@@ -1,0 +1,1 @@
+insert into "user" (email, nickname, password, role, active, created_at, updated_at) values ('admin@gmail.com', '관리자', '$2a$10$BsLduLFYpzwPScJDQUSqNunzJLT7S41GN.7wk6HQKDBVmBKq7QEZG', 'ROLE_ADMIN', true, now(), now()); -- 1234
