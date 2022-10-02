@@ -7,9 +7,11 @@
 ## 실습환경
 
 - java 8
-- springboot 2.6.7
+- springboot 2.7.2
 - junit5 (spring-boot-starter-test)
-- gradle 7.4.1
+- gradle 7.5.1
+- spring security 5.7.3
+- io.jsonwebtoken 0.11.5
 
 ## 학습목표
 
