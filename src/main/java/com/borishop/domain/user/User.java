@@ -10,8 +10,8 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
-public class Users extends BaseTimeEntity {
+@Table(name = "users") // mysql의 user테이블이 이미 있어 users로 변경
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +34,7 @@ public class Users extends BaseTimeEntity {
     private boolean active;
 
     @Builder
-    public Users(String email, String nickname, String password, Role role, boolean active) {
+    public User(String email, String nickname, String password, Role role, boolean active) {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
@@ -42,7 +42,7 @@ public class Users extends BaseTimeEntity {
         this.active = active;
     }
 
-    public Users update(String nickname, String password, boolean active) {
+    public User update(String nickname, String password, boolean active) {
         this.nickname = nickname;
         this.password = password;
         this.active = active;

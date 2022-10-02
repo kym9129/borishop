@@ -40,6 +40,7 @@ public class SecurityConfig{
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().antMatchers("/h2-console/**"
                 , "/api/login"
+                , "/api/signup"
                 , "/favicon.ico"
                 , "/error");
     }

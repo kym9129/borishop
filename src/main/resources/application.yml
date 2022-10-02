@@ -2,10 +2,7 @@ spring:
   output:
     ansi:
       enabled : always # 콘솔로그 컬러로 출력
-  profiles:
-    include: security
 
-# 나중엔 github repository secret을 사용하는 방법도 고려해보기
 jwt:
   header: Authorization
   secret: Ym9yaXNob3AtdGVjaC1zcHJpbmctYm9vdC1qd3QtdHV0b3JpYWwtc2VjcmV0LWJvcmlzaG9wLXRlY2gtc3ByaW5nLWJvdC1qd3QtdHV0b3JpYWwtc2VjcmV0LWtleS1nZW5lcmF0aW9uCg==
