@@ -42,11 +42,11 @@ public class ProductControllerTest {
         for(long i = 1 ; i <= 10; i++){
             productList.add(Product.builder()
                     .id(i)
-                    .productName("[무료배송] 보리의 깃털장난감 "+i)
+                    .name("[무료배송] 보리의 깃털장난감 "+i)
                     .price(5000)
                     .stockNumber(500)
-                    .productDetail("보리가 아주 좋아하는 깃털 장난감입니다."+i)
-                    .productSellStatus(ProductSellStatus.SELL)
+                    .detail("보리가 아주 좋아하는 깃털 장난감입니다."+i)
+                    .sellStatus(ProductSellStatus.SELL)
                     .build());
         }
     }
@@ -74,16 +74,4 @@ public class ProductControllerTest {
                         .content(objectMapper.writeValueAsString(givenRequestDto))
         ).andExpect(status().isOk());
     }
-
-//    @Test
-//    @DisplayName("상품 목록 조회 controller 테스트")
-//    void read_product_list_test() throws Exception {
-//    // github action용 실패 테스트
-////        given(productService.findAll()).will
-//
-//        mvc.perform(
-//                get("/product")
-//        ).andExpect(status().isOk())
-//                .andExpect(jsonPath("$.data", is(productList)));
-//    }
 }

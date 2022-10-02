@@ -6,7 +6,6 @@ import com.borishop.web.dto.product.ProductUpdateRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -19,8 +18,11 @@ public class Product extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="product_name", nullable = false, length = 50)
-    private String productName; // 상품명
+    @Column(name="name", nullable = false, length = 50)
+    private String name; // 상품명
+
+    @Column(name="detail", nullable = false)
+    private String detail; // 상품 상세 설명
 
     @Column(name="price", nullable = false)
     private int price;
@@ -28,36 +30,26 @@ public class Product extends BaseTimeEntity {
     @Column(name="stock_number", nullable = false)
     private int stockNumber; // 재고수량
 
-    @Lob
-    @Column(name="product_detail", nullable = false)
-    private String productDetail; // 상품 상세 설명
-
-    @Column(name="product_sell_status")
+    @Column(name="sell_status")
     @Enumerated(EnumType.STRING)
-    private ProductSellStatus productSellStatus; // 상품 판매상태
-
-    // BaseTimeEntity로 처리
-//    private LocalDateTime createdAt; // 등록 시간
-//    private LocalDateTime updatedAt; // 수정 시간
+    private ProductSellStatus sellStatus; // 상품 판매상태
 
     @Builder
-    public Product (Long id, String productName, int price, int stockNumber, String productDetail, ProductSellStatus productSellStatus){
+    public Product (Long id, String name, int price, int stockNumber, String detail, ProductSellStatus sellStatus){
         this.id = id;
-        this.productName = productName;
+        this.name = name;
+        this.detail = detail;
         this.price = price;
         this.stockNumber = stockNumber;
-        this.productDetail = productDetail;
-        this.productSellStatus = productSellStatus;
-//        this.createdAt = LocalDateTime.now();
+        this.sellStatus = sellStatus;
     }
 
     /* 도메인에서 처리하는 비즈니스 로직 */
     public void update(ProductUpdateRequestDto requestDto){
-        this.productName = requestDto.getProductName();
+        this.name = requestDto.getProductName();
+        this.detail = requestDto.getProductDetail();
         this.price = requestDto.getPrice();
         this.stockNumber = requestDto.getStockNumber();
-        this.productDetail = requestDto.getProductDetail();
-        this.productSellStatus = requestDto.getProductSellStatus();
-//        this.updatedAt = LocalDateTime.now();
+        this.sellStatus = requestDto.getProductSellStatus();
     }
 }

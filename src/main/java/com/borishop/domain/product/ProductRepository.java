@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long>, QuerydslPredicateExecutor<Product> {
 
-    List<Product> findByProductName(String productName);
+    List<Product> findByName(String name);
 
     @Query("SELECT P FROM product AS P " +
-            "WHERE P.productDetail LIKE %:productDetail% ")
-    List<Product> findByProductDetail(@Param("productDetail")String productDetail);
+            "WHERE P.detail LIKE %:detail% ")
+    List<Product> findByDetail(@Param("detail")String detail);
 }
