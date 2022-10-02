@@ -16,18 +16,18 @@ public class ProductResponseDto {
     private String productDetail; // 상품 상세 설명
     private ProductSellStatus productSellStatus; // 상품 판매상태
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime createdAt; // 등록 시간
+    private LocalDateTime regDate; // 등록 시간
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime updatedAt; // 수정 시간
+    private LocalDateTime modDate; // 수정 시간
 
     public ProductResponseDto(Product entity){
         this.id = entity.getId();
-        this.productName = entity.getProductName();
+        this.productName = entity.getName();
         this.price = entity.getPrice();
         this.stockNumber = entity.getStockNumber();
-        this.productDetail = entity.getProductDetail();
-        this.productSellStatus = entity.getProductSellStatus();
-        this.createdAt = entity.getCreatedAt();
-        this.updatedAt = entity.getUpdatedAt();
+        this.productDetail = entity.getDetail();
+        this.productSellStatus = entity.getSellStatus();
+        this.regDate = entity.getRegDate();
+        this.modDate = entity.getModDate();
     }
 }

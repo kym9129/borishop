@@ -70,11 +70,11 @@ public class ProductIntegrationTest {
 
         List<Product> all = productRepository.findAll();
         assertAll(
-                () -> assertThat(all.get(0).getProductName()).isEqualTo(givenRequestDto.getProductName()),
+                () -> assertThat(all.get(0).getName()).isEqualTo(givenRequestDto.getProductName()),
                 () -> assertThat(all.get(0).getPrice()).isEqualTo(givenRequestDto.getPrice()),
                 () -> assertThat(all.get(0).getStockNumber()).isEqualTo(givenRequestDto.getStockNumber()),
-                () -> assertThat(all.get(0).getProductDetail()).isEqualTo(givenRequestDto.getProductDetail()),
-                () -> assertThat(all.get(0).getProductSellStatus()).isEqualTo(givenRequestDto.getProductSellStatus())
+                () -> assertThat(all.get(0).getDetail()).isEqualTo(givenRequestDto.getProductDetail()),
+                () -> assertThat(all.get(0).getSellStatus()).isEqualTo(givenRequestDto.getProductSellStatus())
         );
 
     }
@@ -85,11 +85,11 @@ public class ProductIntegrationTest {
     void update(){
         // given
         Product saveProduct = productRepository.save(Product.builder()
-                .productName("[무료배송] 보리의 깃털장난감")
+                .name("[무료배송] 보리의 깃털장난감")
                 .price(5000)
                 .stockNumber(500)
-                .productDetail("보리가 아주 좋아하는 깃털 장난감입니다.")
-                .productSellStatus(ProductSellStatus.SELL)
+                .detail("보리가 아주 좋아하는 깃털 장난감입니다.")
+                .sellStatus(ProductSellStatus.SELL)
                 .build());
 
         Long updateId = saveProduct.getId();
@@ -115,11 +115,11 @@ public class ProductIntegrationTest {
 
         Product product = productRepository.findById(updateId).orElseThrow(null);
         assertAll(
-                () -> assertThat(product.getProductName()).isEqualTo(givenRequestDto.getProductName()),
+                () -> assertThat(product.getName()).isEqualTo(givenRequestDto.getProductName()),
                 () -> assertThat(product.getPrice()).isEqualTo(givenRequestDto.getPrice()),
                 () -> assertThat(product.getStockNumber()).isEqualTo(givenRequestDto.getStockNumber()),
-                () -> assertThat(product.getProductDetail()).isEqualTo(givenRequestDto.getProductDetail()),
-                () -> assertThat(product.getProductSellStatus()).isEqualTo(givenRequestDto.getProductSellStatus())
+                () -> assertThat(product.getDetail()).isEqualTo(givenRequestDto.getProductDetail()),
+                () -> assertThat(product.getSellStatus()).isEqualTo(givenRequestDto.getProductSellStatus())
         );
 
 

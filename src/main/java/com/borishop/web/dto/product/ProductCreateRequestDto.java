@@ -5,6 +5,7 @@ import com.borishop.constant.ProductSellStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class ProductCreateRequestDto {
     @NotBlank(message = "상품명은 필수 입력 값입니다.")
@@ -30,11 +32,11 @@ public class ProductCreateRequestDto {
 
     public Product toEntity() {
         return Product.builder()
-                .productName(productName)
+                .name(productName)
                 .price(price)
                 .stockNumber(stockNumber)
-                .productDetail(productDetail)
-                .productSellStatus(productSellStatus)
+                .detail(productDetail)
+                .sellStatus(productSellStatus)
                 .build();
     }
 }
