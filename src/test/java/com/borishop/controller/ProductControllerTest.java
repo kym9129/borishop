@@ -1,5 +1,6 @@
 package com.borishop.controller;
 
+import com.borishop.web.dto.product.ProductResponseDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.borishop.constant.ProductSellStatus;
 import com.borishop.domain.product.Product;
@@ -14,20 +15,25 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ProductController.class)
 @MockBean(JpaMetamodelMappingContext.class)
+@WithMockUser
 public class ProductControllerTest {
     @Autowired
     private MockMvc mvc;
@@ -53,7 +59,7 @@ public class ProductControllerTest {
 
     @Test
     @DisplayName("상품 등록 controller 테스트")
-    @Disabled("로그인 구현 중이라 임시로 패스")
+    @WithMockUser(roles = {"ADMIN"})
     void create_product_test() throws Exception {
         ProductCreateRequestDto givenRequestDto = ProductCreateRequestDto.builder()
                 .productName("[무료배송] 보리의 깃털장난감")
@@ -69,9 +75,29 @@ public class ProductControllerTest {
 
         mvc.perform(
                 post("/api/product")
+                        .with(csrf()) // 403 에러 시
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(objectMapper.writeValueAsString(givenRequestDto))
-        ).andExpect(status().isOk());
+        )
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("상품 1개 조회 테스트")
+    void get_product_one_test() throws Exception {
+        Product givenProduct = productList.get(0);
+        ProductResponseDto responseDto = new ProductResponseDto(givenProduct);
+        given(productService.findById(any())).willReturn(responseDto);
+
+        mvc.perform(
+                get("/api/product/" + 1)
+                        .characterEncoding("UTF-8")
+        )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.productName", is(givenProduct.getName())))
+                .andExpect(jsonPath("$.stockNumber", is(givenProduct.getStockNumber())));
     }
 }
