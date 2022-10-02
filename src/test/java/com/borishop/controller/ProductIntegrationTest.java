@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
-@ActiveProfiles("local")
+@ActiveProfiles("test")
 public class ProductIntegrationTest {
 
     @LocalServerPort
@@ -46,7 +46,7 @@ public class ProductIntegrationTest {
 
     @Test
     @DisplayName("상품 등록")
-    @Disabled("로그인 구현 중이라 임시로 패스")
+    @Disabled("일단 유닛테스트부터 하고")
     void product_add() throws Exception {
         // given
         ProductCreateRequestDto givenRequestDto = ProductCreateRequestDto.builder()
@@ -81,7 +81,7 @@ public class ProductIntegrationTest {
 
     @Test
     @DisplayName("상품 수정 테스트")
-    @Disabled("로그인 구현 중이라 임시로 패스")
+    @Disabled("일단 유닛테스트부터 하고")
     void update(){
         // given
         Product saveProduct = productRepository.save(Product.builder()

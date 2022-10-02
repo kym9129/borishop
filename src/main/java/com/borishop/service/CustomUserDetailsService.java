@@ -1,6 +1,6 @@
 package com.borishop.service;
 
-import com.borishop.domain.user.Users;
+import com.borishop.domain.user.User;
 import com.borishop.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,14 +33,14 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(email + " : 등록되지 않은 유저입니다."));
     }
 
-    private org.springframework.security.core.userdetails.User createUser(String email, Users users){
-        if(!users.isActive()){
+    private org.springframework.security.core.userdetails.User createUser(String email, User user){
+        if(!user.isActive()){
             throw new RuntimeException(email + " : 비활성화 유저입니다.");
         }
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority(users.getRoleKey()));
+        grantedAuthorities.add(new SimpleGrantedAuthority(user.getRoleKey()));
 
-        return new org.springframework.security.core.userdetails.User(email, users.getPassword(), grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(email, user.getPassword(), grantedAuthorities);
     }
 }
