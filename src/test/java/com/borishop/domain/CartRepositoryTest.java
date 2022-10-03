@@ -5,11 +5,13 @@ import com.borishop.domain.cart.CartRepository;
 import com.borishop.domain.user.User;
 import com.borishop.domain.user.UserRepository;
 import com.borishop.web.dto.auth.UserDto;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +38,9 @@ public class CartRepositoryTest {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @MockBean
+    JPAQueryFactory jpaQueryFactory;
 
     public User createUser(){
         UserDto dto = UserDto.builder()

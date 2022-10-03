@@ -21,7 +21,7 @@ public class CartProduct {
 
     @ManyToOne // CartProduct : Product = N : 1 → 여러개의(Many) 카트에 하나의(One) 상품이
     @JoinColumn(name="product_id")
-    private Product proeuct;
+    private Product product;
 
     private int count;
 }
