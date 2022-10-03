@@ -39,6 +39,7 @@ public class ProductRepositoryTest {
 
     @MockBean
     JPAQueryFactory jpaQueryFactory;
+//    JPAQueryFactory queryFactory = new JPAQueryFactory(em);
 
     // 일부 테스트에서만 사용하기 때문에 @BeforeEach하지 않았음
     void create_product_list(){
