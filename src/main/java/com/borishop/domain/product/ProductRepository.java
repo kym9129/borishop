@@ -15,5 +15,5 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Queryds
             "WHERE P.detail LIKE %:detail% ")
     List<Product> findByDetail(@Param("detail")String detail);
 
-    List<Product> findAllByOrderByIdDesc();
+    List<Product> findAllByOrderByIdDesc(); // The first "By" in a query method indicates the start of a path expression.
 }
