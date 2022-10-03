@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class ProductResponseDto {
-    private Long id;
+    private Long productId;
     private String productName; // 상품명
     private int price;
     private int stockNumber; // 재고수량
@@ -21,7 +21,7 @@ public class ProductResponseDto {
     private LocalDateTime modDate; // 수정 시간
 
     public ProductResponseDto(Product entity){
-        this.id = entity.getId();
+        this.productId = entity.getId();
         this.productName = entity.getName();
         this.price = entity.getPrice();
         this.stockNumber = entity.getStockNumber();

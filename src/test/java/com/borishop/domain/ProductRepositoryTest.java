@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -35,6 +36,9 @@ public class ProductRepositoryTest {
 
     @PersistenceContext // [QueryDsl]영속성 컨텍스트를 사용하기 위해 EntityManager 빈 주입
     EntityManager em;
+
+    @MockBean
+    JPAQueryFactory jpaQueryFactory;
 
     // 일부 테스트에서만 사용하기 때문에 @BeforeEach하지 않았음
     void create_product_list(){

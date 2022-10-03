@@ -4,6 +4,7 @@ import com.borishop.domain.product.Product;
 import com.borishop.domain.product.ProductRepository;
 import com.borishop.web.dto.product.ProductCreateRequestDto;
 import com.borishop.constant.ProductSellStatus;
+import com.borishop.web.dto.product.ProductResponseDto;
 import com.borishop.web.dto.product.ProductUpdateRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -21,10 +22,14 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(
@@ -34,6 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ProductApiTest {
 
     private int port;
+    private String host = "http://localhost:"+port;
 
     @Autowired
     private ProductRepository productRepository;
@@ -50,6 +56,8 @@ public class ProductApiTest {
 
     @BeforeEach
     public void setup() {
+        // @WithMockUser는 MockMvc에서만 작동
+        // @SpringBootTest에서 MockMvc를 사용하기 위한 설정
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
@@ -62,7 +70,7 @@ public class ProductApiTest {
     }
 
     @Test
-    @DisplayName("상품 등록")
+    @DisplayName("상품 등록 테스트")
     @WithMockUser(roles="ADMIN")
     void product_add() throws Exception {
         // given
@@ -74,7 +82,7 @@ public class ProductApiTest {
                 .productSellStatus(ProductSellStatus.SELL)
                 .build();
 
-        String url = "http://localhost:"+port+"/api/product";
+        String url = host+"/api/product";
 
         // when
         mvc.perform(post(url)
@@ -114,7 +122,7 @@ public class ProductApiTest {
                 .productSellStatus(ProductSellStatus.WAIT)
                 .build();
 
-        String url = "http://localhost:"+port+"/api/product/"+updateId;
+        String url = host+"/api/product/"+updateId;
 
         // when
         mvc.perform(put(url)
@@ -131,6 +139,33 @@ public class ProductApiTest {
                 () -> assertThat(product.getDetail()).isEqualTo(givenRequestDto.getProductDetail()),
                 () -> assertThat(product.getSellStatus()).isEqualTo(givenRequestDto.getProductSellStatus())
         );
+    }
+
+    @Test
+    @DisplayName("상품 1개 조회 테스트")
+    @WithMockUser
+    void get_product_one_test() throws Exception {
+
+        // given
+        ProductCreateRequestDto givenRequestDto = ProductCreateRequestDto.builder()
+                .productName("[무료배송] 보리의 깃털장난감")
+                .price(5000)
+                .stockNumber(500)
+                .productDetail("보리가 아주 좋아하는 깃털 장난감입니다.")
+                .productSellStatus(ProductSellStatus.SELL)
+                .build();
+        Product saveProduct = productRepository.save(givenRequestDto.toEntity());
+
+        // when
+        mvc.perform(
+                        get(host+"/api/product/" + saveProduct.getId())
+                                .characterEncoding("UTF-8")
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.productId", is(saveProduct.getId().intValue())))
+                .andExpect(jsonPath("$.productName", is(saveProduct.getName())))
+                .andExpect(jsonPath("$.stockNumber", is(saveProduct.getStockNumber())));
     }
 
 }
