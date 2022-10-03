@@ -40,6 +40,7 @@ public class ProductService {
     }
 
     public List<Product> findAll() {
-        return productRepository.findAll();
+        // todo: pagination
+        return productRepository.findAllByOrderByIdDesc();
     }
 }
