@@ -1,6 +1,9 @@
-package com.borishop.domain.product;
+package com.borishop.domain;
 
 import com.borishop.constant.ProductSellStatus;
+import com.borishop.domain.product.Product;
+import com.borishop.domain.product.ProductRepository;
+import com.borishop.domain.product.QProduct;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -8,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,9 +28,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DataJpaTest
-@TestPropertySource(properties = {
-        "spring.jpa.hibernate.ddl-auto=create-drop"
-})
 @ActiveProfiles("test")
 @Transactional
 public class ProductRepositoryTest {
@@ -35,6 +36,10 @@ public class ProductRepositoryTest {
 
     @PersistenceContext // [QueryDsl]영속성 컨텍스트를 사용하기 위해 EntityManager 빈 주입
     EntityManager em;
+
+    @MockBean
+    JPAQueryFactory jpaQueryFactory;
+//    JPAQueryFactory queryFactory = new JPAQueryFactory(em);
 
     // 일부 테스트에서만 사용하기 때문에 @BeforeEach하지 않았음
     void create_product_list(){

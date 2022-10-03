@@ -1,9 +1,11 @@
 package com.borishop.domain.user;
 
 import com.borishop.domain.BaseTimeEntity;
+import com.borishop.web.dto.auth.UserDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 
@@ -40,6 +42,16 @@ public class User extends BaseTimeEntity {
         this.password = password;
         this.role = role;
         this.active = active;
+    }
+
+    public static User create(UserDto userDto, PasswordEncoder passwordEncoder){
+        return User.builder()
+                .email(userDto.getEmail())
+                .nickname(userDto.getNickname())
+                .password(passwordEncoder.encode(userDto.getPassword()))
+                .role(Role.USER)
+                .active(true)
+                .build();
     }
 
     public User update(String nickname, String password, boolean active) {
