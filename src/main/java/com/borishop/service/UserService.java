@@ -2,7 +2,8 @@ package com.borishop.service;
 
 import com.borishop.config.auth.jwt.JwtFilter;
 import com.borishop.config.auth.jwt.TokenProvider;
-import com.borishop.domain.user.Role;
+import com.borishop.domain.cart.Cart;
+import com.borishop.domain.cart.CartRepository;
 import com.borishop.domain.user.User;
 import com.borishop.domain.user.UserRepository;
 import com.borishop.exception.DuplicateMemberException;
@@ -12,7 +13,6 @@ import com.borishop.web.dto.auth.LoginRequestDto;
 import com.borishop.web.dto.auth.TokenResponseDto;
 import com.borishop.web.dto.auth.UserDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -28,6 +28,7 @@ public class UserService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CartRepository cartRepository;
 
     public TokenResponseDto login(LoginRequestDto loginDto){
         UsernamePasswordAuthenticationToken authenticationToken =
@@ -44,9 +45,14 @@ public class UserService {
         if(userRepository.findByEmail(requestDto.getEmail()).orElse(null) != null){
             throw new DuplicateMemberException("이미 가입되어있는 유저입니다.");
         }
+        User user = userRepository.save(User.create(requestDto, passwordEncoder));
 
-        User user = User.create(requestDto, passwordEncoder);
-        return UserDto.from(userRepository.save(user));
+        // 회원가입 하면서 해당 유저의 장바구니도 생성
+        Cart cart = new Cart();
+        cart.setUser(user);
+        cartRepository.save(cart);
+
+        return UserDto.from(user);
     }
 
     /**

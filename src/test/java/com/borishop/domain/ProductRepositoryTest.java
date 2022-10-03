@@ -1,6 +1,9 @@
-package com.borishop.domain.product;
+package com.borishop.domain;
 
 import com.borishop.constant.ProductSellStatus;
+import com.borishop.domain.product.Product;
+import com.borishop.domain.product.ProductRepository;
+import com.borishop.domain.product.QProduct;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -24,9 +27,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DataJpaTest
-@TestPropertySource(properties = {
-        "spring.jpa.hibernate.ddl-auto=create-drop"
-})
 @ActiveProfiles("test")
 @Transactional
 public class ProductRepositoryTest {
