@@ -45,14 +45,7 @@ public class UserService {
             throw new DuplicateMemberException("이미 가입되어있는 유저입니다.");
         }
 
-        User user = User.builder()
-                .email(requestDto.getEmail())
-                .nickname(requestDto.getNickname())
-                .password(passwordEncoder.encode(requestDto.getPassword()))
-                .role(Role.USER)
-                .active(true)
-                .build();
-
+        User user = User.create(requestDto, passwordEncoder);
         return UserDto.from(userRepository.save(user));
     }
 
